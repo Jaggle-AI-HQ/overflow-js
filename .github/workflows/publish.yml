@@ -1,0 +1,50 @@
+name: Publish JS SDKs
+
+on:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish JS SDKs
+    runs-on: [self-hosted, jaggle-dev]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck --workspaces --if-present
+
+      - name: Build all packages
+        run: npm run build --workspaces
+
+      - name: Publish @jaggle-ai/overflow-browser
+        run: npm publish --access public
+        working-directory: packages/browser
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @jaggle-ai/overflow-react
+        run: npm publish --access public
+        working-directory: packages/react
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @jaggle-ai/overflow-nextjs
+        run: npm publish --access public
+        working-directory: packages/nextjs
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

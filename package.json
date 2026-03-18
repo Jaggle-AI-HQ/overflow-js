@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w packages/browser && npm run build -w packages/react && npm run build -w packages/nextjs",
+    "dev": "npm run dev -w packages/browser & npm run dev -w packages/react & npm run dev -w packages/nextjs",
+    "clean": "rm -rf packages/*/dist"
+  }
+}
