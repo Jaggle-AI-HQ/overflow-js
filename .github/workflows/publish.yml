@@ -56,7 +56,7 @@ jobs:
           else
             NEW_VERSION=$(npm version ${{ github.event.inputs.bump }} --no-git-tag-version)
           fi
-          echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          echo "new_version=${NEW_VERSION#v}" >> "$GITHUB_OUTPUT"
         working-directory: packages/${{ github.event.inputs.package }}
 
       - name: Build all packages
