@@ -60,10 +60,10 @@ jobs:
         working-directory: packages/${{ github.event.inputs.package }}
 
       - name: Build all packages
-        run: npm run build --workspaces
+        run: npm run build
 
       - name: Typecheck
-        run: npm run typecheck --workspaces --if-present
+        run: npm run typecheck -w packages/browser && npm run typecheck -w packages/react && npm run typecheck -w packages/nextjs
 
       - name: Publish
         run: |
