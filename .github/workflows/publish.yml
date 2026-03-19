@@ -1,18 +1,41 @@
-name: Publish JS SDKs
+name: Publish Package
 
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Package to publish
+        required: true
+        type: choice
+        options:
+          - browser
+          - react
+          - nextjs
+      bump:
+        description: Version bump type
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - prerelease
+      preid:
+        description: Pre-release identifier (only used when bump is "prerelease")
+        required: false
+        type: string
+        default: beta
 
 concurrency:
-  group: publish-${{ github.ref }}
+  group: publish-${{ github.event.inputs.package }}
   cancel-in-progress: false
 
 jobs:
   publish:
-    name: Publish JS SDKs
+    name: Publish @jaggle-ai/overflow-${{ github.event.inputs.package }}
     runs-on: [self-hosted, jaggle-dev]
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -25,26 +48,39 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Typecheck
-        run: npm run typecheck --workspaces --if-present
+      - name: Bump version
+        id: version
+        run: |
+          if [ "${{ github.event.inputs.bump }}" = "prerelease" ]; then
+            NEW_VERSION=$(npm version prerelease --preid=${{ github.event.inputs.preid }} --no-git-tag-version)
+          else
+            NEW_VERSION=$(npm version ${{ github.event.inputs.bump }} --no-git-tag-version)
+          fi
+          echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+        working-directory: packages/${{ github.event.inputs.package }}
 
       - name: Build all packages
         run: npm run build --workspaces
 
-      - name: Publish @jaggle-ai/overflow-browser
-        run: npm publish --access public
-        working-directory: packages/browser
+      - name: Typecheck
+        run: npm run typecheck --workspaces --if-present
+
+      - name: Publish
+        run: |
+          if [ "${{ github.event.inputs.bump }}" = "prerelease" ]; then
+            npm publish --access public --tag ${{ github.event.inputs.preid }}
+          else
+            npm publish --access public
+          fi
+        working-directory: packages/${{ github.event.inputs.package }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish @jaggle-ai/overflow-react
-        run: npm publish --access public
-        working-directory: packages/react
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish @jaggle-ai/overflow-nextjs
-        run: npm publish --access public
-        working-directory: packages/nextjs
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add packages/${{ github.event.inputs.package }}/package.json
+          git commit -m "release: @jaggle-ai/overflow-${{ github.event.inputs.package }}@${{ steps.version.outputs.new_version }}"
+          git tag "@jaggle-ai/overflow-${{ github.event.inputs.package }}@${{ steps.version.outputs.new_version }}"
+          git push origin HEAD --tags
