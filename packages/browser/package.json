@@ -1,6 +1,6 @@
 {
   "name": "@jaggle-ai/overflow-browser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Jaggle Overflow SDK for browsers",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
