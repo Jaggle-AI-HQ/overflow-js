@@ -24,8 +24,8 @@ jobs:
 
       - run: npm ci
 
-      - name: Type check
-        run: npm run typecheck --workspaces --if-present
-
       - name: Build
-        run: npm run build -w packages/browser && npm run build -w packages/react && npm run build -w packages/nextjs
+        run: npm run build
+
+      - name: Type check
+        run: npm run typecheck -w packages/browser && npm run typecheck -w packages/react && npm run typecheck -w packages/nextjs
