@@ -84,3 +84,19 @@ jobs:
           git commit -m "release: @jaggle-ai/overflow-${{ github.event.inputs.package }}@${{ steps.version.outputs.new_version }}"
           git tag "@jaggle-ai/overflow-${{ github.event.inputs.package }}@${{ steps.version.outputs.new_version }}"
           git push origin HEAD --tags
+
+      - name: Create GitHub Release
+        run: |
+          TAG="@jaggle-ai/overflow-${{ github.event.inputs.package }}@${{ steps.version.outputs.new_version }}"
+          if [ "${{ github.event.inputs.bump }}" = "prerelease" ]; then
+            gh release create "$TAG" \
+              --title "$TAG" \
+              --generate-notes \
+              --prerelease
+          else
+            gh release create "$TAG" \
+              --title "$TAG" \
+              --generate-notes
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
