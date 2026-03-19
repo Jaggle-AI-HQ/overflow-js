@@ -25,7 +25,7 @@
     "@jaggle-ai/overflow-browser": ">=0.1.0"
   },
   "devDependencies": {
-    "@jaggle-ai/overflow-browser": "0.1.0",
+    "@jaggle-ai/overflow-browser": "*",
     "@types/react": "^19.0.0",
     "react": "^19.0.0",
     "tsup": "^8.0.0",
