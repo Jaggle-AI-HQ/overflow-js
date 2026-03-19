@@ -1,6 +1,6 @@
 # @jaggle-ai/overflow-nextjs
 
-Official Next.js SDK for [Overflow](https://github.com/Jaggle-AI-HQ/jaggle-overflow) error tracking. Supports both App Router and API routes.
+Next.js SDK for [Jaggle Overflow](https://overflow.jaggle.ai) error tracking. Supports both App Router and API routes.
 
 ## Installation
 

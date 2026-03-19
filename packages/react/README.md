@@ -1,6 +1,6 @@
 # @jaggle-ai/overflow-react
 
-Official React SDK for [Overflow](https://github.com/Jaggle-AI-HQ/jaggle-overflow) error tracking. Built on top of `@jaggle-ai/overflow-browser`.
+React SDK for [Jaggle Overflow](https://overflow.jaggle.ai) error tracking. Built on top of `@jaggle-ai/overflow-browser`.
 
 ## Installation
 

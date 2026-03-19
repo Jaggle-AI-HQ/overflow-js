@@ -82,7 +82,7 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 ## Reporting Bugs
 
-Please use the [bug report template](https://github.com/Jaggle-AI-HQ/jaggle-overflow/issues/new?template=bug_report.md) and include:
+Please use the [bug report template](https://github.com/Jaggle-AI-HQ/overflow-js/issues/new?template=bug_report.md) and include:
 
 - Which package and version you're using
 - Steps to reproduce
@@ -91,7 +91,7 @@ Please use the [bug report template](https://github.com/Jaggle-AI-HQ/jaggle-over
 
 ## Requesting Features
 
-Open an issue using the [feature request template](https://github.com/Jaggle-AI-HQ/jaggle-overflow/issues/new?template=feature_request.md) and describe the use case.
+Open an issue using the [feature request template](https://github.com/Jaggle-AI-HQ/overflow-js/issues/new?template=feature_request.md) and describe the use case.
 
 ## License
 

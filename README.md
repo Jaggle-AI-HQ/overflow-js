@@ -1,14 +1,14 @@
 # Overflow JS SDKs
 
-Monorepo for the official [Overflow](https://github.com/Jaggle-AI-HQ/jaggle-overflow) JavaScript SDKs.
+Monorepo for [Jaggle Overflow](https://overflow.jaggle.ai).
 
 ## Packages
 
-| Package | Description |
-| --- | --- |
-| [@jaggle-ai/overflow-browser](packages/browser) | Browser SDK |
-| [@jaggle-ai/overflow-react](packages/react) | React SDK (error boundaries, context) |
-| [@jaggle-ai/overflow-nextjs](packages/nextjs) | Next.js SDK (server + client) |
+| Package                                         | Description                           |
+| ----------------------------------------------- | ------------------------------------- |
+| [@jaggle-ai/overflow-browser](packages/browser) | Browser SDK                           |
+| [@jaggle-ai/overflow-react](packages/react)     | React SDK (error boundaries, context) |
+| [@jaggle-ai/overflow-nextjs](packages/nextjs)   | Next.js SDK (server + client)         |
 
 ## Development
 
@@ -33,12 +33,12 @@ The workflow automatically bumps the version in `package.json`, builds, publishe
 
 ### Version bumps
 
-| Bump | When to use | Example |
-| --- | --- | --- |
-| `patch` | Bug fixes | 0.1.0 -> 0.1.1 |
-| `minor` | New features, backwards compatible | 0.1.0 -> 0.2.0 |
-| `major` | Breaking changes | 0.1.0 -> 1.0.0 |
-| `prerelease` | Testing before a stable release | 0.1.0 -> 0.1.1-beta.0 |
+| Bump         | When to use                        | Example               |
+| ------------ | ---------------------------------- | --------------------- |
+| `patch`      | Bug fixes                          | 0.1.0 -> 0.1.1        |
+| `minor`      | New features, backwards compatible | 0.1.0 -> 0.2.0        |
+| `major`      | Breaking changes                   | 0.1.0 -> 1.0.0        |
+| `prerelease` | Testing before a stable release    | 0.1.0 -> 0.1.1-beta.0 |
 
 ### Beta releases
 

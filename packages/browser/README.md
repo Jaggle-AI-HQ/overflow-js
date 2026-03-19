@@ -1,6 +1,6 @@
 # @jaggle-ai/overflow-browser
 
-Official browser SDK for [Overflow](https://github.com/Jaggle-AI-HQ/jaggle-overflow) error tracking.
+Browser SDK for [Jaggle Overflow](https://overflow.jaggle.ai) error tracking.
 
 ## Installation
 
