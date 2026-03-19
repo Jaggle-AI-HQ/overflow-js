@@ -57,6 +57,10 @@ If a change in `browser` affects downstream packages:
 2. Update the `peerDependencies` range in `react`/`nextjs` if the minimum version changed
 3. Publish `react`, then `nextjs`
 
+## Changelog
+
+See [GitHub Releases](https://github.com/Jaggle-AI-HQ/overflow-js/releases) for release notes.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, commit conventions, and pull request guidelines.
