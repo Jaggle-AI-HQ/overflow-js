@@ -1,5 +1,7 @@
 # @jaggle-ai/overflow-nextjs
 
+[![npm version](https://img.shields.io/npm/v/@jaggle-ai/overflow-nextjs)](https://www.npmjs.com/package/@jaggle-ai/overflow-nextjs)
+
 Next.js SDK for [Jaggle Overflow](https://overflow.jaggle.ai) error tracking. Supports both App Router and API routes.
 
 ## Installation

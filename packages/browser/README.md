@@ -1,5 +1,7 @@
 # @jaggle-ai/overflow-browser
 
+[![npm version](https://img.shields.io/npm/v/@jaggle-ai/overflow-browser)](https://www.npmjs.com/package/@jaggle-ai/overflow-browser)
+
 Browser SDK for [Jaggle Overflow](https://overflow.jaggle.ai) error tracking.
 
 ## Installation

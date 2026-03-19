@@ -1,5 +1,7 @@
 # @jaggle-ai/overflow-react
 
+[![npm version](https://img.shields.io/npm/v/@jaggle-ai/overflow-react)](https://www.npmjs.com/package/@jaggle-ai/overflow-react)
+
 React SDK for [Jaggle Overflow](https://overflow.jaggle.ai) error tracking. Built on top of `@jaggle-ai/overflow-browser`.
 
 ## Installation

@@ -1,5 +1,7 @@
 # Overflow JS SDKs
 
+[![CI](https://github.com/Jaggle-AI-HQ/overflow-js/actions/workflows/ci.yml/badge.svg)](https://github.com/Jaggle-AI-HQ/overflow-js/actions/workflows/ci.yml)
+
 Monorepo for [Jaggle Overflow](https://overflow.jaggle.ai).
 
 ## Packages
