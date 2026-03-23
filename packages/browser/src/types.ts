@@ -1,7 +1,14 @@
 export type Level = "debug" | "info" | "warning" | "error" | "fatal";
 
+/** Transport interface for delivering events to the server. */
+export interface Transport {
+  send(event: OverflowEvent): Promise<void>;
+  flush(timeout?: number): Promise<boolean>;
+}
+
 export interface OverflowOptions {
-  /** Project DSN from Overflow Overflow. Format: https://<public-key>@<host>/api/ingest */
+  /** Project DSN from Overflow Overflow. Format: https://<public-key>@<host>/api/ingest
+   *  If empty, the SDK operates in no-op mode (all captures silently succeed). */
   dsn: string;
   /** Environment name (e.g. "production", "staging") */
   environment?: string;
@@ -17,6 +24,8 @@ export interface OverflowOptions {
   maxBreadcrumbs?: number;
   /** Hook called before each event is sent. Return null to drop the event. */
   beforeSend?: (event: OverflowEvent) => OverflowEvent | null;
+  /** Override the default transport. */
+  transport?: Transport;
   /** Enable debug logging to console. Default: false */
   debug?: boolean;
   /** Default tags applied to all events */

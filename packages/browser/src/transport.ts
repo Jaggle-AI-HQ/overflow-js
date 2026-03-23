@@ -1,9 +1,14 @@
-import type { OverflowEvent } from "./types";
+import type { OverflowEvent, Transport } from "./types";
 import { SDK_NAME, SDK_VERSION } from "./version";
 
-export interface Transport {
-  send(event: OverflowEvent): Promise<void>;
-  flush(): Promise<void>;
+export type { Transport };
+
+/** No-op transport that silently drops all events. Used when DSN is empty. */
+export class NoopTransport implements Transport {
+  async send(): Promise<void> {}
+  async flush(): Promise<boolean> {
+    return true;
+  }
 }
 
 export class FetchTransport implements Transport {
@@ -22,8 +27,16 @@ export class FetchTransport implements Transport {
     });
   }
 
-  async flush(): Promise<void> {
+  async flush(timeout?: number): Promise<boolean> {
+    if (timeout !== undefined && timeout > 0) {
+      const result = await Promise.race([
+        Promise.allSettled(this.pending).then(() => true),
+        new Promise<false>((resolve) => setTimeout(() => resolve(false), timeout)),
+      ]);
+      return result;
+    }
     await Promise.allSettled(this.pending);
+    return true;
   }
 
   private async doSend(event: OverflowEvent): Promise<void> {

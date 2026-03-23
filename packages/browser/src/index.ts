@@ -19,11 +19,13 @@ export {
 export { Scope } from "./scope";
 export { parseError, parseStacktrace } from "./stacktrace";
 export { Transaction, Span } from "./tracing";
+export { FetchTransport, NoopTransport } from "./transport";
 export { SDK_VERSION, SDK_NAME } from "./version";
 
 export type {
   OverflowOptions,
   OverflowEvent,
+  Transport,
   Level,
   Breadcrumb,
   ExceptionData,

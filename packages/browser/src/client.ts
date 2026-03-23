@@ -2,11 +2,12 @@ import { parseDSN } from "./dsn";
 import { Scope } from "./scope";
 import { parseError } from "./stacktrace";
 import { Transaction, type TransactionContext } from "./tracing";
-import { FetchTransport, type Transport } from "./transport";
+import { FetchTransport, NoopTransport } from "./transport";
 import type {
   Breadcrumb,
   OverflowEvent,
   OverflowOptions,
+  Transport,
   Level,
   UserContext,
 } from "./types";
@@ -78,15 +79,18 @@ export function startTransaction(ctx: TransactionContext): Transaction | null {
   return globalClient.startTransaction(ctx);
 }
 
-/** Flush all pending events. */
-export async function flush(): Promise<void> {
-  await globalClient?.flush();
+/** Flush all pending events. Returns true if completed within timeout. */
+export async function flush(timeout?: number): Promise<boolean> {
+  if (!globalClient) return true;
+  return globalClient.flush(timeout);
 }
 
-/** Close the SDK and flush pending events. */
-export async function close(): Promise<void> {
-  await globalClient?.close();
+/** Close the SDK and flush pending events. Returns true if completed within timeout. */
+export async function close(timeout?: number): Promise<boolean> {
+  if (!globalClient) return true;
+  const result = await globalClient.close(timeout);
   globalClient = null;
+  return result;
 }
 
 export class OverflowClient {
@@ -119,8 +123,18 @@ export class OverflowClient {
       this.scope.setTags(this.options.defaultTags);
     }
 
-    const { host, publicKey } = parseDSN(options.dsn);
-    this.transport = new FetchTransport(host, publicKey);
+    // No-op mode when DSN is empty — silently drop all events
+    if (!options.dsn) {
+      if (this.options.debug) {
+        console.debug("[overflow] DSN is empty, client will operate in no-op mode");
+      }
+      this.transport = new NoopTransport();
+    } else if (options.transport) {
+      this.transport = options.transport;
+    } else {
+      const { host, publicKey } = parseDSN(options.dsn);
+      this.transport = new FetchTransport(host, publicKey);
+    }
 
     if (this.options.autoCapture && typeof window !== "undefined") {
       this.installGlobalHandlers();
@@ -183,13 +197,13 @@ export class OverflowClient {
     });
   }
 
-  async flush(): Promise<void> {
-    await this.transport.flush();
+  async flush(timeout?: number): Promise<boolean> {
+    return this.transport.flush(timeout);
   }
 
-  async close(): Promise<void> {
+  async close(timeout?: number): Promise<boolean> {
     this.uninstallGlobalHandlers();
-    await this.flush();
+    return this.flush(timeout);
   }
 
   private buildEvent(): OverflowEvent {
