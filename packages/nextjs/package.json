@@ -28,7 +28,7 @@
   "peerDependencies": {
     "next": ">=13.0.0",
     "react": ">=17.0.0",
-    "@jaggle-ai/overflow-browser": ">=0.1.0",
+    "@jaggle-ai/overflow-browser": ">=0.2.0",
     "@jaggle-ai/overflow-react": ">=0.1.0"
   },
   "devDependencies": {
