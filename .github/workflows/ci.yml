@@ -23,7 +23,7 @@ concurrency:
 jobs:
   build:
     name: Build JS SDKs
-    runs-on: [self-hosted, jaggle-dev]
+    runs-on: [self-hosted, jaggle-ci]
     steps:
       - uses: actions/checkout@v4
 
